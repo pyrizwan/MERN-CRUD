@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './Login.css';
+import API from '../api';
 
 class Create extends Component {
 
@@ -24,7 +25,7 @@ class Create extends Component {
 
     const { username, password } = this.state;
 
-    axios.post('/api/auth/register', { username, password })
+    API.post('/api/auth/register', { username, password })
       .then((result) => {
         this.props.history.push("/login")
       });

@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './Login.css';
+import API from '../api';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 class Login extends Component {
 
@@ -25,7 +29,7 @@ class Login extends Component {
 
     const { username, password } = this.state;
 
-    axios.post('/api/auth/login', { username, password })
+    API.post('/api/auth/login', { username, password })
       .then((result) => {
         localStorage.setItem('jwtToken', result.data.token);
         this.setState({ message: '' });
@@ -33,7 +37,11 @@ class Login extends Component {
       })
       .catch((error) => {
         if(error.response.status === 401) {
-          this.setState({ message: 'Login failed. Username or password not match' });
+          this.setState({ message: 'Login failed. Username or password not match.' });
+          toast.error("You don't have permission to do this. Please log in", {
+            position: toast.POSITION.TOP_CENTER
+        });
+
         }
       });
   }
